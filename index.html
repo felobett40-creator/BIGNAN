@@ -1,41 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Valentine Letter</title>
-    <style>
-        body {
-            background-color: pink;
-            color: black;
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .letter {
-            background-color: rgba(255, 255, 255, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>For You 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ff5fa2, #ffd1e8);
+    font-family: Georgia, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Falling hearts */
+.heart {
+    position: absolute;
+    top: -10%;
+    font-size: 22px;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* Glowing box */
+.card {
+    background: rgba(255,255,255,0.9);
+    padding: 25px;
+    width: 380px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 0 20px hotpink, 0 0 40px deeppink;
+}
+
+h2 {
+    color: #e91e63;
+    text-shadow: 0 0 10px pink;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+</style>
 </head>
+
 <body>
-    <div class="letter">
-        <h1>My Valentine 💕</h1>
-        <p>
-            Valentine’s Day is approaching, and I just wanted you to know that
-            you’ve been on my mind. Every smile of yours makes my days brighter,
-            and I can’t wait to celebrate love with you. You mean more to me
-            than words can say.
-        </p>
-        <p><strong>Happy early Valentine’s Day ❤️</strong></p>
-    </div>
+
+<div class="card">
+    <h2>To My Love 💕</h2>
+    <p id="text">
+        You are beautiful in every way, and you deserve the very best in life.
+        Even with my situation, my love for you is real. I don’t always know
+        how to express my feelings, but I hope you can feel my heart. Please
+        give me a chance to show you how much you mean to me.
+    </p>
+</div>
+
+<audio id="music" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Typewriter effect
+const textEl = document.getElementById("text");
+const fullText = textEl.textContent;
+textEl.textContent = "";
+let i = 0;
+
+function typeWriter() {
+    if (i < fullText.length) {
+        textEl.textContent += fullText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+typeWriter();
+
+// Falling hearts
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 10000);
+}, 500);
+
+// Click hearts
+document.addEventListener("click", e => {
+    const h = document.createElement("div");
+    h.innerHTML = "💗";
+    h.style.position = "absolute";
+    h.style.left = e.pageX + "px";
+    h.style.top = e.pageY + "px";
+    document.body.appendChild(h);
+
+    h.animate([
+        { transform: "translateY(0)", opacity: 1 },
+        { transform: "translateY(-80px)", opacity: 0 }
+    ], { duration: 1500 });
+
+    setTimeout(() => h.remove(), 1500);
+});
+</script>
+
 </body>
 </html>
